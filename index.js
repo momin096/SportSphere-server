@@ -53,12 +53,12 @@ async function run() {
 
 
         // get specific data
-        // app.get('/all-products', async (req, res) => {
-        //     const email = req.body.email;
-        //     const query = { email };
-        //     const result = await productCollection.find(query).toArray();
-        //     res.send(result);
-        // })
+        app.get('/my-products', async (req, res) => {
+                const email = req.query.email;
+                const query = { email };
+                const result = await productCollection.find(query).toArray();
+                res.json(result);
+        });
 
         // get a product 
         app.get('/all-products/:id', async (req, res) => {
@@ -80,4 +80,4 @@ async function run() {
         // await client.close();
     }
 }
-run().catch(console.dir);
+run()
