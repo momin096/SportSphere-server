@@ -21,17 +21,15 @@ const client = new MongoClient(uri, {
     }
 });
 
-app.get('/', (req, res) => {
-    res.send('coffee server running')
-})
 
-app.listen(port, () => {
-    console.log(`server is running on port ${port}`);
 
-})
+
 
 async function run() {
     try {
+        app.get('/', (req, res) => {
+            res.send('coffee server running')
+        })
         // Connect the client to the server	(optional starting in v4.7)
         // await client.connect();
         // Send a ping to confirm a successful connection
@@ -40,25 +38,30 @@ async function run() {
         const productCollection = client.db('sport-sphere').collection('products');
 
         // create a product
-        app.post('/all-products', async(req,res)=>{
+        app.post('/all-products', async (req, res) => {
             const newProduct = req.body;
             const result = await productCollection.insertOne(newProduct);
             res.send(result)
         })
 
         // get products
-        app.get('/all-products', async(req,res)=>{
+        app.get('/all-products', async (req, res) => {
             const cursor = productCollection.find().limit(6);
             const result = await cursor.toArray();
             res.send(result)
         });
 
         // get a product 
-        app.get('/all-products/:id', async(req,res)=>{
+        app.get('/all-products/:id', async (req, res) => {
             const id = req.params.id;
-            const query = {_id : new ObjectId(id)};
-            const result = await  productCollection.findOne(query);
+            const query = { _id: new ObjectId(id) };
+            const result = await productCollection.findOne(query);
             res.send(result);
+        })
+
+        app.listen(port, () => {
+            console.log(`server is running on port ${port}`);
+
         })
 
 
