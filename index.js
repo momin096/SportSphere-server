@@ -51,13 +51,21 @@ async function run() {
             res.send(result)
         });
 
+        // get a data for update 
+        app.get('/my-products/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) };
+            const result = await productCollection.findOne(query);
+            res.send(result);
+        })
+
 
         // get specific data
         app.get('/my-products', async (req, res) => {
-                const email = req.query.email;
-                const query = { email };
-                const result = await productCollection.find(query).toArray();
-                res.json(result);
+            const email = req.query.email;
+            const query = { email };
+            const result = await productCollection.find(query).toArray();
+            res.json(result);
         });
 
         // get a product 
@@ -69,9 +77,9 @@ async function run() {
         })
 
         // delete a product 
-        app.delete('/my-products/:id', async(req,res)=>{
+        app.delete('/my-products/:id', async (req, res) => {
             const id = req.params.id;
-            const query = {_id: new ObjectId(id)};
+            const query = { _id: new ObjectId(id) };
             const result = await productCollection.deleteOne(query);
             res.send(result);
         })
