@@ -4,7 +4,7 @@ const app = express();
 require('dotenv').config()
 
 const port = process.env.PORT || 5000;
-const { MongoClient, ServerApiVersion, ObjectId, ReturnDocument } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 // middleware 
 app.use(cors());
@@ -30,10 +30,6 @@ async function run() {
         app.get('/', (req, res) => {
             res.send('coffee server running')
         })
-        // Connect the client to the server	(optional starting in v4.7)
-        // await client.connect();
-        // Send a ping to confirm a successful connection
-        // await client.db("admin").command({ ping: 1 });
 
         const productCollection = client.db('sport-sphere').collection('products');
 
@@ -107,15 +103,15 @@ async function run() {
         })
 
         app.listen(port, () => {
-            console.log(`server is running on port ${port}`);
+            // console.log(`server is running on port ${port}`);
 
         })
 
 
-        console.log("Pinged your deployment. You successfully connected to MongoDB!");
+        // console.log("Pinged your deployment. You successfully connected to MongoDB!");
     } finally {
-        // Ensures that the client will close when you finish/error
         // await client.close();
+
     }
 }
-run()
+run();
